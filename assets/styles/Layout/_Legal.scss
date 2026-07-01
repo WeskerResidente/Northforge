@@ -1,0 +1,72 @@
+.legal-page {
+	padding: 3rem 1.5rem 4rem;
+	background: linear-gradient(180deg, $white 0%, $gray-100 100%);
+
+	&__inner {
+		max-width: 920px;
+		margin: 0 auto;
+		padding: 2.25rem;
+		border: 1px solid $gray-200;
+		border-radius: 1rem;
+		background-color: $white;
+		box-shadow: 0 12px 30px rgba($black, 0.05);
+	}
+
+	&__eyebrow {
+		margin: 0 0 0.75rem;
+		font-size: $font-size-sm;
+		font-weight: $font-weight-semibold;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: $secondary;
+	}
+
+	&__intro {
+		max-width: 70ch;
+		margin: 0 0 2rem;
+		font-size: $font-size-lg;
+		line-height: $line-height-relaxed;
+		color: $gray-700;
+	}
+
+	&__content {
+		display: grid;
+		gap: 1.75rem;
+	}
+
+	&__section {
+		padding-top: 1.25rem;
+		border-top: 1px solid $gray-200;
+
+		h2 {
+			margin-bottom: 0.75rem;
+			font-size: clamp(1.25rem, 1vw + 1rem, 1.75rem);
+			color: $text-primary;
+		}
+
+		p {
+			max-width: 75ch;
+			margin-bottom: 1rem;
+			color: $gray-700;
+			line-height: $line-height-relaxed;
+		}
+
+		ul {
+			margin: 0;
+			padding-left: 1.25rem;
+			color: $gray-700;
+		}
+
+		li + li {
+			margin-top: 0.4rem;
+		}
+	}
+
+	@media (max-width: 768px) {
+		padding-inline: 1rem;
+
+		&__inner {
+			padding: 1.5rem;
+		}
+	}
+}

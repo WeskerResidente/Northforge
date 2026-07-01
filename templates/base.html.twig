@@ -44,5 +44,26 @@
             </nav>
         </header>
         {% block body %}{% endblock %}
+
+        <footer class="site-footer">
+            <div class="site-footer__inner">
+                <div class="site-footer__brand">
+                    <img class="site-footer__logo" src="{{ asset('images/logo.png') }}" alt="Northforge">
+                    <p class="site-footer__text">
+                        Northforge accompagne vos échanges avec une interface simple, claire et rapide.
+                    </p>
+                </div>
+
+                <nav class="site-footer__nav" aria-label="Navigation secondaire">
+                    <a class="site-footer__link" href="{{ path('app_privacy') }}">Politique de confidentialite</a>
+                    <a class="site-footer__link" href="{{ path('app_terms') }}">Conditions d utilisation</a>
+                    <a class="site-footer__link" href="{{ path('app_cookies') }}">Politique de cookies</a>
+                </nav>
+
+                <p class="site-footer__copyright">
+                    &copy; {{ "now"|date("Y") }} Northforge. Tous droits réservés.
+                </p>
+            </div>
+        </footer>
     </body>
 </html>

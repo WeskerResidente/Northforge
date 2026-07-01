@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} - Northforge{% endblock %}
+
+{% block body %}
+    <main class="legal-page">
+        <div class="legal-page__inner">
+            <p class="legal-page__eyebrow">Informations légales</p>
+            <h1>{{ heading }}</h1>
+            <p class="legal-page__intro">{{ intro }}</p>
+
+            <div class="legal-page__content">
+                {% for section in sections %}
+                    <section class="legal-page__section">
+                        <h2>{{ section.title }}</h2>
+
+                        {% for paragraph in section.paragraphs %}
+                            <p>{{ paragraph }}</p>
+                        {% endfor %}
+
+                        {% if section.items is defined %}
+                            <ul>
+                                {% for item in section.items %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </section>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+{% endblock %}
