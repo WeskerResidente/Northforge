@@ -3,9 +3,31 @@
 {% block title %}Northforge{% endblock %}
 
 {% block body %}
-<div>
-    <h1>Welcome to Northforge!</h1>
-    <p>This is the home page of the Northforge application.</p>
-    <img src="https://www.mnhn.fr/system/files/styles/21_10_medium/private/thumbnails/image/phoque-veau-marin-c-mnhn-p.png.webp?itok=x6_XT7Lu" alt="Phoque veau-marin">
-</div>
+<main class="home-hero">
+	<section class="home-hero__content">
+		<div class="home-hero__motion" aria-hidden="true">
+			<span class="home-hero__truck home-hero__truck--one"></span>
+			<span class="home-hero__truck home-hero__truck--two"></span>
+			<span class="home-hero__pallet home-hero__pallet--one"></span>
+			<span class="home-hero__pallet home-hero__pallet--two"></span>
+			<span class="home-hero__pallet home-hero__pallet--three"></span>
+		</div>
+		<h1 class="home-hero__title">
+			<span class="home-hero__title-line">Échangez vos bien</span>
+			<span class="home-hero__title-line home-hero__title-line--accent">en toute simplicité</span>
+		</h1>
+
+		<div class="home-hero__actions">
+			<a class="btn btn-inscription home-hero__cta home-hero__cta--primary" href="#catalogue">
+				Découvrir le catalogue
+				<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+			</a>
+
+			<a class="btn btn-connexion home-hero__cta home-hero__cta--secondary" href="{{ path('app_login') }}">
+				Connexion / Inscription
+			</a>
+		</div>
+	</section>
+</main>
+
 {% endblock %}

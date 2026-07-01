@@ -6,6 +6,7 @@
  * which should already be in your base.html.twig.
  */
 import './styles/app.scss';
+import './Js/animation.js';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 

@@ -1,0 +1,270 @@
+.home-hero {
+	--truck-drift: 0px;
+	--pallet-drift: 0px;
+	--truck-float: 0px;
+	--pallet-float: 0px;
+	--motion-rotate: 0deg;
+	--motion-opacity: 1;
+
+	display: grid;
+	place-items: center;
+	min-height: calc(100vh - 11rem);
+	padding: 3rem 1.5rem 4rem;
+	background-color: rgba($secondary, 0.02);
+	overflow: hidden;
+
+	&__content {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: 2.25rem;
+		max-width: 48rem;
+		isolation: isolate;
+	}
+
+	&__title {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		gap: 0.15rem;
+		margin: 0;
+		font-family: $font-secondary;
+		font-size: clamp(2.5rem, 4vw + 1rem, 4.75rem);
+		font-weight: $font-weight-bold;
+		line-height: 0.98;
+		color: $text-primary;
+	}
+
+	&__title-line {
+		display: block;
+
+		&--accent {
+			color: $secondary;
+		}
+	}
+
+	&__actions {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1.25rem;
+	}
+
+	&__cta {
+		min-width: 16rem;
+		min-height: 4rem;
+		padding-inline: 1.5rem;
+		font-size: $font-size-base;
+		text-decoration: none;
+
+		i {
+			font-size: 0.95em;
+		}
+	}
+
+	&__cta--primary {
+		box-shadow: 0 10px 24px rgba($black, 0.08);
+	}
+
+	&__cta--secondary {
+		background-color: $white;
+	}
+
+	&__motion {
+		position: absolute;
+		inset: -8rem -12rem;
+		z-index: 0;
+		pointer-events: none;
+		opacity: var(--motion-opacity);
+	}
+
+	&__truck,
+	&__pallet {
+		position: absolute;
+		display: block;
+		will-change: transform;
+	}
+
+	&__truck {
+		width: 9rem;
+		height: 4rem;
+		border-radius: 0.55rem 0.9rem 0.45rem 0.45rem;
+		background:
+			linear-gradient(90deg, rgba($white, 0) 0 63%, rgba($white, 0.36) 64% 76%, rgba($white, 0) 77%),
+			linear-gradient(90deg, $secondary 0 62%, #1554a8 63% 100%);
+		box-shadow: 0 18px 42px rgba($secondary, 0.14);
+		transform: translate3d(0, calc(var(--truck-drift) + var(--truck-float)), 0);
+		animation: hero-truck-float 9s ease-in-out infinite;
+	}
+
+	&__truck::before,
+	&__truck::after {
+		content: "";
+		position: absolute;
+		bottom: -0.55rem;
+		width: 1.35rem;
+		height: 1.35rem;
+		border: 0.28rem solid $primary;
+		border-radius: 999px;
+		background: $gray-300;
+	}
+
+	&__truck::before {
+		left: 1.1rem;
+	}
+
+	&__truck::after {
+		right: 1.05rem;
+	}
+
+	&__truck--one {
+		top: 0;
+		left: -5rem;
+	}
+
+	&__truck--two {
+		width: 7.25rem;
+		height: 3.25rem;
+		right: -4rem;
+		top: 6rem;
+		animation-delay: -2.5s;
+		transform: translate3d(0, calc(var(--truck-drift) + var(--truck-float)), 0) scaleX(-1);
+	}
+
+	&__pallet {
+		width: 6.5rem;
+		height: 3.6rem;
+		border-radius: 0.45rem;
+		background:
+			linear-gradient(90deg, rgba($black, 0.12) 0 12%, rgba($white, 0) 13% 37%, rgba($black, 0.12) 38% 50%, rgba($white, 0) 51% 75%, rgba($black, 0.12) 76% 88%, rgba($white, 0) 89%),
+			repeating-linear-gradient(0deg, #d79a48 0 0.62rem, #b96f25 0.64rem 0.82rem);
+		box-shadow: 0 18px 40px rgba($black, 0.11);
+		transform: translate3d(0, calc(var(--pallet-drift) + var(--pallet-float)), 0) rotate(var(--motion-rotate));
+		animation: hero-pallet-float 10s ease-in-out infinite;
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			width: 100%;
+			background: rgba($black, 0.1);
+		}
+
+		&::before {
+			bottom: 0.55rem;
+			height: 0.25rem;
+		}
+
+		&::after {
+			bottom: -0.15rem;
+			height: 0.45rem;
+			border-radius: 0 0 0.35rem 0.35rem;
+		}
+	}
+
+	&__pallet--one {
+		right: 9%;
+		bottom: -1.5rem;
+	}
+
+	&__pallet--two {
+		width: 4.8rem;
+		height: 2.9rem;
+		top: 2.2rem;
+		left: 72%;
+		animation-delay: -4s;
+	}
+
+	&__pallet--three {
+		width: 4.2rem;
+		height: 2.6rem;
+		left: 16%;
+		bottom: -2.25rem;
+		animation-delay: -5s;
+	}
+
+	@media (max-width: 640px) {
+		min-height: calc(100vh - 9rem);
+		padding-inline: 1rem;
+
+		&__content {
+			gap: 1.75rem;
+		}
+
+		&__title {
+			font-size: clamp(2rem, 8vw, 3rem);
+		}
+
+		&__cta {
+			min-width: 100%;
+		}
+
+		&__motion {
+			inset: -5rem -2rem;
+		}
+
+		&__truck--one {
+			width: 6.8rem;
+			height: 3.1rem;
+			left: -1.5rem;
+		}
+
+		&__truck--two,
+		&__pallet--two {
+			display: none;
+		}
+
+		&__pallet--one {
+			right: 0;
+			bottom: -3rem;
+		}
+	}
+}
+
+@property --truck-float {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+@property --pallet-float {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+@keyframes hero-truck-float {
+	0%,
+	100% {
+		--truck-float: 0px;
+	}
+
+	50% {
+		--truck-float: -1rem;
+	}
+}
+
+@keyframes hero-pallet-float {
+	0%,
+	100% {
+		--pallet-float: 0px;
+	}
+
+	50% {
+		--pallet-float: 0.85rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.home-hero {
+		&__truck,
+		&__pallet {
+			animation: none;
+		}
+	}
+}
