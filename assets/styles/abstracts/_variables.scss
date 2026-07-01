@@ -1,0 +1,75 @@
+// Neutral colors
+$white: #ffffff;
+$black: #000000;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+
+// Primary colors
+$primary: #231F20;
+$secondary: #1E6FD9;
+
+// Status colors
+$success: #00C72B;
+$negociation: #C77A00;
+$proposition: #5347FF;
+$denied: #C70000;
+
+// Semantic colors
+$warning: #F5A623;
+$danger: #FF0000;
+
+// Chat colors
+$chat: #8E8E93;
+
+// Text colors
+$text-primary: $primary;
+$text-secondary: $secondary;
+$text-light: $white;
+$text-muted: $gray-500;
+
+// Background colors
+$bg-primary: $primary;
+$bg-secondary: $secondary;
+$bg-light: $white;
+$bg-dark: $black;
+$bg-muted: $gray-100;
+
+// =============================================================================
+// TYPOGRAPHY
+// =============================================================================
+
+// Font families
+$font-primary: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+$font-secondary: "Inter", Georgia, "Times New Roman", serif;
+
+// Font sizes
+$font-size-base: 1rem;
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 1.875rem;
+$font-size-4xl: 2.25rem;
+$font-size-5xl: 3rem;
+
+// Font weights
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+// Line heights
+$line-height-tight: 1.25;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+$line-height-loose: 2;

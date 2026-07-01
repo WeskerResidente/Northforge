@@ -2,7 +2,10 @@ framework:
     asset_mapper:
         # The paths to make available to the asset mapper.
         paths:
-            - assets/
+            assets/: ''
+            icons/: 'icons'
+        excluded_patterns:
+            - '*.js'
         missing_import_mode: strict
 
 when@prod:

@@ -1,24 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Northforge{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>🃏</text></svg>">
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
-
-        {% set frankenphpHotReload = app.request.server.get('FRANKENPHP_HOT_RELOAD') %}
-        {% if frankenphpHotReload %}
-        <meta name="frankenphp-hot-reload:url" content="{{ frankenphpHotReload }}">
-        <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>
-        <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
-        {% endif %}
     </head>
     <body>
+        <header class="site-header">
+            <div class="site-header__brand">
+                <a class="site-header__logo-link" href="{{ path('app_home') }}" aria-label="Northforge accueil">
+                    <img class="site-header__logo" src="{{ asset('images/logo.png') }}" alt="Northforge">
+                </a>
+            </div>
+
+            <nav class="site-header__nav" aria-label="Navigation principale">
+                <a class="site-header__nav-link is-active" href="{{ path('app_home') }}">
+                    <img src="{{ asset('icons/home-w.svg') }}" alt="" aria-hidden="true">
+                    <span>Accueil</span>
+                </a>
+
+                <a class="site-header__nav-link" href="#catalogue">
+                    <img src="{{ asset('icons/shop.svg') }}" alt="" aria-hidden="true">
+                    <span>Catalogue</span>
+                </a>
+
+                <a class="site-header__nav-link" href="#ajouter">
+                    <img src="{{ asset('icons/Add.svg') }}" alt="" aria-hidden="true">
+                    <span>Ajouter</span>
+                </a>
+
+                <a class="site-header__nav-link" href="{{ path('app_login') }}">
+                    <img src="{{ asset('icons/profil.svg') }}" alt="" aria-hidden="true">
+                    <span>Profil</span>
+                </a>
+            </nav>
+        </header>
         {% block body %}{% endblock %}
     </body>
 </html>

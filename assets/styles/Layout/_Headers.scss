@@ -1,0 +1,105 @@
+.site-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+	min-height: 6rem;
+	padding: 0.75rem 1.5rem;
+	background-color: $white;
+
+	&__brand {
+		display: flex;
+		align-items: center;
+		flex: 0 0 auto;
+	}
+
+	&__logo-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		text-decoration: none;
+	}
+
+	&__logo {
+		display: block;
+		width: 7rem;
+		height: 7rem;
+		object-fit: contain;
+	}
+
+	&__nav {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	&__nav-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.7rem 1rem;
+		border-radius: 0.25rem;
+		font-family: $font-primary;
+		font-size: $font-size-base;
+		font-weight: $font-weight-medium;
+		color: $gray-800;
+		text-decoration: none;
+		line-height: 1;
+		transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+		img {
+			width: 1rem;
+			height: 1rem;
+			object-fit: contain;
+		}
+
+		&:hover {
+			background-color: $gray-100;
+			transform: translateY(-1px);
+		}
+
+		&:focus-visible {
+			outline: 2px solid rgba($secondary, 0.35);
+			outline-offset: 2px;
+		}
+
+		&.is-active {
+			background-color: $black;
+			color: $white;
+			font-weight: $font-weight-semibold;
+		}
+	}
+
+	@media (max-width: 900px) {
+		flex-direction: column;
+		align-items: stretch;
+
+		&__nav {
+			justify-content: center;
+		}
+	}
+
+	@media (max-width: 640px) {
+		padding-inline: 1rem;
+
+		&__logo {
+			width: 5.5rem;
+			height: 5.5rem;
+		}
+
+		&__nav {
+			width: 100%;
+			justify-content: space-between;
+			gap: 0.25rem;
+		}
+
+		&__nav-link {
+			flex: 1 1 0;
+			justify-content: center;
+			padding-inline: 0.5rem;
+			font-size: 0.875rem;
+		}
+	}
+}
