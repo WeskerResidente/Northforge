@@ -63,6 +63,57 @@
 			</article>
 		</div>
 	</section>
+
+	<section class="home-featured" id="catalogue" aria-labelledby="home-featured-title">
+		<div class="home-featured__header">
+			<h2 class="home-featured__title" id="home-featured-title">Objets en vedette</h2>
+			<p class="home-featured__subtitle">D&eacute;couvrez quelques objets disponibles &agrave; l'&eacute;change</p>
+		</div>
+
+		{% if featuredObjects is not empty %}
+			<div class="home-featured__grid">
+				{% for featuredObject in featuredObjects %}
+					{% set featuredTitle = featuredObject.title %}
+					{% set featuredDescription = featuredObject.description %}
+					{% set featuredProposedBy = featuredObject.proposedBy %}
+
+					<article
+						class="home-featured__card"
+						data-modal-title="{{ featuredObject.title }}"
+						data-modal-description="{{ featuredObject.description }}"
+						data-modal-proposed-by="{{ featuredObject.proposedBy }}"
+					>
+						<img
+							class="home-featured__image"
+							src="{{ featuredObject.imageFilename ? asset('images/' ~ featuredObject.imageFilename) : asset('images/no-image.png') }}"
+							alt="{{ featuredObject.title }}"
+						>
+
+						<div class="home-featured__body">
+							<h3 class="home-featured__card-title">{{ featuredTitle|length > 64 ? featuredTitle|slice(0, 64) ~ '...' : featuredTitle }}</h3>
+							<p class="home-featured__description">{{ featuredDescription|length > 115 ? featuredDescription|slice(0, 115) ~ '...' : featuredDescription }}</p>
+
+							<div class="home-featured__meta">
+								<div>
+									<span class="home-featured__label">Valeur d'achat</span>
+									<strong class="home-featured__value">{{ featuredObject.purchaseValue|number_format(0, ',', ' ') }} &euro;</strong>
+								</div>
+
+								<div>
+									<span class="home-featured__label">Propos&eacute; par</span>
+									<strong class="home-featured__value">{{ featuredProposedBy|length > 22 ? featuredProposedBy|slice(0, 22) ~ '...' : featuredProposedBy }}</strong>
+								</div>
+							</div>
+
+							<a class="home-featured__button" href="#catalogue">Proposer un &eacute;change</a>
+						</div>
+					</article>
+				{% endfor %}
+			</div>
+		{% else %}
+			<p class="home-featured__empty">Aucun objet en vedette pour le moment.</p>
+		{% endif %}
+	</section>
 </main>
 
 {% endblock %}

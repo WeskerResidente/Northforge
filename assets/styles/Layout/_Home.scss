@@ -435,3 +435,239 @@
 		}
 	}
 }
+
+// =============================================================================
+// Section "Objets en vedette"
+// =============================================================================
+// Cartes alimentees par la BDD via ExchangeObjectRepository::findFeaturedForHome().
+.home-featured {
+	position: relative;
+	padding: 4.75rem 2rem 5rem;
+	background-color: $gray-100;
+
+	&__header {
+		position: relative;
+		z-index: 0;
+		display: grid;
+		gap: 1.35rem;
+		margin: 0 auto 2.5rem;
+		text-align: center;
+	}
+
+	&__title {
+		margin: 0;
+		font-family: $font-primary;
+		font-size: clamp(2rem, 1.4vw + 1rem, $font-size-4xl);
+		font-weight: $font-weight-bold;
+		line-height: $line-height-tight;
+		color: $text-primary;
+	}
+
+	&__subtitle {
+		margin: 0;
+		max-width: none;
+		font-size: $font-size-lg;
+		font-weight: $font-weight-bold;
+		color: $gray-500;
+	}
+
+	&__grid {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 2rem;
+		width: min(100%, 57.5rem);
+		margin: 0 auto;
+	}
+
+	&__card {
+		position: relative;
+		display: flex;
+		min-height: 25.5rem;
+		flex-direction: column;
+		overflow: hidden;
+		border: 1px solid $gray-300;
+		border-radius: 0.85rem;
+		background-color: $white;
+		box-shadow: 0 1px 2px rgba($black, 0.04);
+		transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+	}
+
+	&__image {
+		width: 100%;
+		aspect-ratio: 1.25;
+		object-fit: cover;
+		background-color: $gray-200;
+	}
+
+	&__body {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		padding: 0.95rem 0.9rem 0.8rem;
+	}
+
+	&__card-title {
+		margin: 0 0 0.75rem;
+		font-family: $font-primary;
+		font-size: $font-size-lg;
+		font-weight: $font-weight-bold;
+		line-height: 1.18;
+		color: $text-primary;
+	}
+
+	&__description {
+		display: -webkit-box;
+		margin: 0 0 1.25rem;
+		overflow: hidden;
+		color: $text-primary;
+		font-size: $font-size-xs;
+		line-height: 1.25;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+	}
+
+	&__meta {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+		margin-top: auto;
+		margin-bottom: 0.75rem;
+	}
+
+	&__meta > div:last-child {
+		text-align: right;
+	}
+
+	&__label {
+		display: block;
+		margin-bottom: 0.25rem;
+		font-size: $font-size-xs;
+		line-height: 1;
+		color: $gray-500;
+	}
+
+	&__value {
+		display: block;
+		font-size: $font-size-xs;
+		font-weight: $font-weight-normal;
+		line-height: 1.15;
+		color: $text-primary;
+	}
+
+	&__button {
+		display: inline-flex;
+		min-height: 2.25rem;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0.35rem;
+		background-color: $black;
+		color: $white;
+		font-size: $font-size-sm;
+		font-weight: $font-weight-bold;
+		line-height: 1;
+		text-decoration: none;
+		transition: background-color 0.2s ease, transform 0.2s ease;
+
+		&:hover,
+		&:focus-visible {
+			background-color: $gray-900;
+			color: $white;
+			transform: translateY(-1px);
+		}
+	}
+
+	&__empty {
+		margin: 0 auto;
+		max-width: 34rem;
+		text-align: center;
+		color: $gray-600;
+	}
+
+	@media (max-width: 960px) {
+		&__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 640px) {
+		padding: 4rem 1.25rem;
+
+		&__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+}
+
+// Modale creee en JS depuis une carte "Objet en vedette".
+.home-featured-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 1000;
+	display: grid;
+	place-items: center;
+	padding: 2rem;
+	background-color: rgba($black, 0.22);
+}
+
+.home-featured-modal__card {
+	display: grid;
+	grid-template-columns: minmax(16rem, 0.95fr) minmax(18rem, 1.05fr);
+	width: min(92vw, 58rem);
+	max-height: calc(100vh - 4rem);
+	min-height: 0;
+	overflow: auto;
+	border: 1px solid $gray-400;
+	border-radius: 0.85rem;
+	background-color: $white;
+	box-shadow: 0 24px 46px rgba($black, 0.24);
+
+	.home-featured__image {
+		height: 100%;
+		min-height: 24rem;
+		aspect-ratio: auto;
+	}
+
+	.home-featured__body {
+		padding: 2rem;
+	}
+
+	.home-featured__card-title {
+		margin-bottom: 1.25rem;
+		font-size: $font-size-3xl;
+		line-height: 1.12;
+	}
+
+	.home-featured__description {
+		margin-bottom: 2rem;
+		font-size: $font-size-base;
+		line-height: $line-height-normal;
+		-webkit-line-clamp: unset;
+	}
+
+	.home-featured__meta {
+		margin-bottom: 1.5rem;
+	}
+
+	.home-featured__button {
+		min-height: 3rem;
+		font-size: $font-size-base;
+	}
+}
+
+body.has-home-featured-modal {
+	overflow: hidden;
+}
+
+@media (max-width: 960px) {
+	.home-featured-modal__card {
+		grid-template-columns: 1fr;
+		width: min(90vw, 34rem);
+
+		.home-featured__image {
+			min-height: 16rem;
+			aspect-ratio: 1.35;
+		}
+	}
+}
