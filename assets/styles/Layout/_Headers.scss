@@ -70,6 +70,16 @@
 			color: $white;
 			font-weight: $font-weight-semibold;
 		}
+
+		&--auth {
+			border: 1px solid $gray-300;
+			background-color: $white;
+			font-weight: $font-weight-semibold;
+
+			&:hover {
+				border-color: $gray-500;
+			}
+		}
 	}
 
 	@media (max-width: 900px) {

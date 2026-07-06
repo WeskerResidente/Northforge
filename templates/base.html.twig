@@ -32,15 +32,21 @@
                     <span>Catalogue</span>
                 </a>
 
-                <a class="site-header__nav-link" href="#ajouter">
-                    <img src="{{ asset('icons/Add.svg') }}" alt="" aria-hidden="true">
-                    <span>Ajouter</span>
-                </a>
+                {% if app.user %}
+                    <a class="site-header__nav-link" href="#ajouter">
+                        <img src="{{ asset('icons/Add.svg') }}" alt="" aria-hidden="true">
+                        <span>Ajouter</span>
+                    </a>
 
-                <a class="site-header__nav-link" href="{{ path('app_login') }}">
-                    <img src="{{ asset('icons/profil.svg') }}" alt="" aria-hidden="true">
-                    <span>Profil</span>
-                </a>
+                    <a class="site-header__nav-link" href="{{ path('app_login') }}">
+                        <img src="{{ asset('icons/profil.svg') }}" alt="" aria-hidden="true">
+                        <span>Profil</span>
+                    </a>
+                {% else %}
+                    <a class="site-header__nav-link site-header__nav-link--auth" href="{{ path('app_login') }}">
+                        <span>Connexion / Inscription</span>
+                    </a>
+                {% endif %}
             </nav>
         </header>
         {% block body %}{% endblock %}

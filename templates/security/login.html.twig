@@ -1,39 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
-{{ encore_entry_link_tags('app') }}
-{{ encore_entry_script_tags('app') }}
+{% block title %}Connexion - Northforge{% endblock %}
+
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+<main class="register-page">
+	<section class="register-card login-card" aria-labelledby="login-title">
+		<div class="register-card__header">
+			<h1 class="register-card__title" id="login-title">Connexion</h1>
+			<p class="register-card__subtitle">Accédez à votre espace Northforge.</p>
+		</div>
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">Logout</a>
-            </div>
-        {% endif %}
+		{% if error %}
+			<p class="login-card__alert">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+		{% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="username">Email</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-        <label for="password">Password</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+		{% if app.user %}
+			<p class="login-card__notice">
+				Vous êtes connecté avec {{ app.user.userIdentifier }}.
+				<a href="{{ path('app_logout') }}">Se déconnecter</a>
+			</p>
+		{% else %}
+			<form class="register-form login-form" method="post">
+				<div class="register-form__field">
+					<label for="username">Mail</label>
+					<input type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" required autofocus>
+				</div>
 
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
+				<div class="register-form__field">
+					<label for="password">Mot de passe</label>
+					<input type="password" name="_password" id="password" autocomplete="current-password" required>
+				</div>
 
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Remember me</label>
-            </div>
-        #}
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
+				<button class="btn btn-inscription login-form__submit" type="submit">Se connecter</button>
+			</form>
+
+			<p class="login-card__register">
+				Pas encore de compte ?
+				<a href="{{ path('app_register') }}">Créer un compte</a>
+			</p>
+		{% endif %}
+	</section>
+</main>
 {% endblock %}
