@@ -3,29 +3,64 @@
 {% block title %}Northforge{% endblock %}
 
 {% block body %}
-<main class="home-hero">
-	<section class="home-hero__content">
-		<div class="home-hero__motion" aria-hidden="true">
-			<span class="home-hero__truck home-hero__truck--one"></span>
-			<span class="home-hero__truck home-hero__truck--two"></span>
-			<span class="home-hero__pallet home-hero__pallet--one"></span>
-			<span class="home-hero__pallet home-hero__pallet--two"></span>
-			<span class="home-hero__pallet home-hero__pallet--three"></span>
+<main class="home-page">
+	<section class="home-hero">
+		<div class="home-hero__content">
+			<div class="home-hero__motion" aria-hidden="true">
+				<span class="home-hero__truck home-hero__truck--one"></span>
+				<span class="home-hero__truck home-hero__truck--two"></span>
+				<span class="home-hero__pallet home-hero__pallet--one"></span>
+				<span class="home-hero__pallet home-hero__pallet--two"></span>
+				<span class="home-hero__pallet home-hero__pallet--three"></span>
+			</div>
+			<h1 class="home-hero__title">
+				<span class="home-hero__title-line">&Eacute;changez vos bien</span>
+				<span class="home-hero__title-line home-hero__title-line--accent">en toute simplicit&eacute;</span>
+			</h1>
+
+			<div class="home-hero__actions">
+				<a class="btn btn-inscription home-hero__cta home-hero__cta--primary" href="#catalogue">
+					D&eacute;couvrir le catalogue
+					<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+				</a>
+
+				<a class="btn btn-connexion home-hero__cta home-hero__cta--secondary" href="{{ path('app_login') }}">
+					Connexion / Inscription
+				</a>
+			</div>
 		</div>
-		<h1 class="home-hero__title">
-			<span class="home-hero__title-line">Échangez vos bien</span>
-			<span class="home-hero__title-line home-hero__title-line--accent">en toute simplicité</span>
-		</h1>
+	</section>
 
-		<div class="home-hero__actions">
-			<a class="btn btn-inscription home-hero__cta home-hero__cta--primary" href="#catalogue">
-				Découvrir le catalogue
-				<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-			</a>
+	<section class="home-steps" aria-labelledby="home-steps-title">
+		<div class="home-steps__header">
+			<h2 class="home-steps__title" id="home-steps-title">Comment &ccedil;a marche ?</h2>
+			<p class="home-steps__subtitle">Simple, rapide et s&eacute;curis&eacute;</p>
+		</div>
 
-			<a class="btn btn-connexion home-hero__cta home-hero__cta--secondary" href="{{ path('app_login') }}">
-				Connexion / Inscription
-			</a>
+		<div class="home-steps__grid">
+			<article class="home-steps__card home-steps__card--blue">
+				<img class="home-steps__icon" src="{{ asset('icons/group-blue.svg') }}" alt="" aria-hidden="true">
+				<h3 class="home-steps__card-title">Inscrivez-vous</h3>
+				<p class="home-steps__text">Cr&eacute;ez votre compte gratuitement et rejoignez notre communaut&eacute; d'&eacute;changeurs.</p>
+			</article>
+
+			<article class="home-steps__card home-steps__card--purple">
+				<img class="home-steps__icon" src="{{ asset('icons/box-purple.svg') }}" alt="" aria-hidden="true">
+				<h3 class="home-steps__card-title">Ajoutez vos objets</h3>
+				<p class="home-steps__text">Publiez vos objets avec photos, descriptions et valeur d'achat.</p>
+			</article>
+
+			<article class="home-steps__card home-steps__card--green">
+				<img class="home-steps__icon" src="{{ asset('icons/exchange-green.svg') }}" alt="" aria-hidden="true">
+				<h3 class="home-steps__card-title">Proposez des &eacute;changes</h3>
+				<p class="home-steps__text">Parcourez le catalogue et proposez des &eacute;changes &eacute;quitables.</p>
+			</article>
+
+			<article class="home-steps__card home-steps__card--yellow">
+				<img class="home-steps__icon" src="{{ asset('icons/sheild-yellow.svg') }}" alt="" aria-hidden="true">
+				<h3 class="home-steps__card-title">&Eacute;changez en toute s&eacute;curit&eacute;</h3>
+				<p class="home-steps__text">Communiquez avec les autres membres et finalisez vos &eacute;changes.</p>
+			</article>
 		</div>
 	</section>
 </main>

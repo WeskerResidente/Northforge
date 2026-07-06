@@ -1,4 +1,11 @@
+@use "sass:color";
+
+// =============================================================================
+// Hero d'accueil
+// =============================================================================
+// Bloc principal de la home : titre, boutons et formes decoratives animees.
 .home-hero {
+	// Variables pilotees par les animations et par le JS de parallaxe.
 	--truck-drift: 0px;
 	--pallet-drift: 0px;
 	--truck-float: 0px;
@@ -13,6 +20,7 @@
 	background-color: rgba($secondary, 0.02);
 	overflow: hidden;
 
+	// Contenu central du hero, place au-dessus des elements decoratifs.
 	&__content {
 		position: relative;
 		display: flex;
@@ -24,6 +32,7 @@
 		isolation: isolate;
 	}
 
+	// Titre principal en deux lignes, avec la deuxieme ligne en couleur secondaire.
 	&__title {
 		position: relative;
 		z-index: 1;
@@ -45,6 +54,7 @@
 		}
 	}
 
+	// Groupe des CTA du hero.
 	&__actions {
 		position: relative;
 		z-index: 1;
@@ -74,6 +84,7 @@
 		background-color: $white;
 	}
 
+	// Zone invisible qui contient les camions et palettes en decoration.
 	&__motion {
 		position: absolute;
 		inset: -8rem -12rem;
@@ -89,14 +100,15 @@
 		will-change: transform;
 	}
 
+	// Dessin CSS du camion. Les pseudo-elements servent aux roues.
 	&__truck {
 		width: 9rem;
 		height: 4rem;
 		border-radius: 0.55rem 0.9rem 0.45rem 0.45rem;
 		background:
 			linear-gradient(90deg, rgba($white, 0) 0 63%, rgba($white, 0.36) 64% 76%, rgba($white, 0) 77%),
-			linear-gradient(90deg, $secondary 0 62%, #1554a8 63% 100%);
-		box-shadow: 0 18px 42px rgba($secondary, 0.14);
+			linear-gradient(90deg, $truck-color 0 62%, color.adjust($truck-color, $lightness: -12%) 63% 100%);
+		box-shadow: 0 18px 42px rgba($truck-color, 0.14);
 		transform: translate3d(0, calc(var(--truck-drift) + var(--truck-float)), 0);
 		animation: hero-truck-float 9s ease-in-out infinite;
 	}
@@ -135,13 +147,14 @@
 		transform: translate3d(0, calc(var(--truck-drift) + var(--truck-float)), 0) scaleX(-1);
 	}
 
+	// Dessin CSS des palettes avec lattes et ombres internes.
 	&__pallet {
 		width: 6.5rem;
 		height: 3.6rem;
 		border-radius: 0.45rem;
 		background:
 			linear-gradient(90deg, rgba($black, 0.12) 0 12%, rgba($white, 0) 13% 37%, rgba($black, 0.12) 38% 50%, rgba($white, 0) 51% 75%, rgba($black, 0.12) 76% 88%, rgba($white, 0) 89%),
-			repeating-linear-gradient(0deg, #d79a48 0 0.62rem, #b96f25 0.64rem 0.82rem);
+			repeating-linear-gradient(0deg, color.adjust($pallet-color, $lightness: 16%) 0 0.62rem, color.adjust($pallet-color, $lightness: -6%) 0.64rem 0.82rem);
 		box-shadow: 0 18px 40px rgba($black, 0.11);
 		transform: translate3d(0, calc(var(--pallet-drift) + var(--pallet-float)), 0) rotate(var(--motion-rotate));
 		animation: hero-pallet-float 10s ease-in-out infinite;
@@ -188,6 +201,7 @@
 		animation-delay: -5s;
 	}
 
+	// Version mobile du hero : moins d'elements decoratifs et CTA pleine largeur.
 	@media (max-width: 640px) {
 		min-height: calc(100vh - 9rem);
 		padding-inline: 1rem;
@@ -226,6 +240,7 @@
 	}
 }
 
+// Declaration des proprietes animees pour permettre une interpolation fluide.
 @property --truck-float {
 	syntax: "<length>";
 	inherits: false;
@@ -238,6 +253,7 @@
 	initial-value: 0px;
 }
 
+// Flottement vertical des camions.
 @keyframes hero-truck-float {
 	0%,
 	100% {
@@ -249,6 +265,7 @@
 	}
 }
 
+// Flottement vertical des palettes.
 @keyframes hero-pallet-float {
 	0%,
 	100% {
@@ -260,11 +277,161 @@
 	}
 }
 
+// Coupe les animations decoratives si l'utilisateur prefere reduire les mouvements.
 @media (prefers-reduced-motion: reduce) {
 	.home-hero {
 		&__truck,
 		&__pallet {
 			animation: none;
+		}
+	}
+}
+
+// =============================================================================
+// Section "Comment ca marche ?"
+// =============================================================================
+// Section sous le hero : titre centre puis quatre cartes explicatives.
+.home-steps {
+	padding: 5.25rem 2.75rem 3.75rem;
+	background-color: $white;
+
+	// Titre et sous-titre, espaces selon la maquette.
+	&__header {
+		display: grid;
+		gap: 1rem;
+		margin: 0 auto 5.75rem;
+		text-align: center;
+	}
+
+	&__title {
+		margin: 0;
+		font-family: $font-primary;
+		font-size: clamp(2.6rem, 2.5vw + 1rem, 3.5rem);
+		font-weight: $font-weight-bold;
+		line-height: 1.05;
+		color: $text-primary;
+	}
+
+	&__subtitle {
+		margin: 0;
+		max-width: none;
+		font-size: clamp(1.25rem, 0.6vw + 1rem, 1.5rem);
+		font-weight: $font-weight-bold;
+		line-height: 1.2;
+		color: $gray-500;
+	}
+
+	// Grille desktop en quatre colonnes, limitee pour garder les cartes compactes.
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1.75rem;
+		width: min(100%, 68.25rem);
+		margin: 0 auto;
+	}
+
+	// Carte d'etape : structure verticale icone, titre, description.
+	&__card {
+		position: relative;
+		display: flex;
+		min-height: 12.875rem;
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 1.125rem 1.125rem 1.2rem;
+		border: 1px solid $gray-400;
+		border-radius: 0.5rem;
+		background-color: $white;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+	}
+
+	&__card:hover {
+		z-index: 1;
+		transform: translateY(-0.25rem) scale(1);
+	}
+
+	&__card--blue:hover {
+		border-color: rgba($color-blue, 0.3);
+		box-shadow: 0 14px 24px rgba($color-blue, 0.16);
+	}
+
+	&__card--purple:hover {
+		border-color: rgba($color-purple, 0.3);
+		box-shadow: 0 14px 24px rgba($color-purple, 0.16);
+	}
+
+	&__card--green:hover {
+		border-color: rgba($color-green, 0.3);
+		box-shadow: 0 14px 24px rgba($color-green, 0.16);
+	}
+
+	&__card--yellow:hover {
+		border-color: rgba($color-yellow, 0.3);
+		box-shadow: 0 14px 24px rgba($color-yellow, 0.16);
+	}
+
+	// Les SVG fournis contiennent deja leurs couleurs et fonds.
+	&__icon {
+		width: 2.5rem;
+		height: 2.5rem;
+		margin-bottom: 1.25rem;
+		object-fit: contain;
+		transition: transform 0.2s ease;
+	}
+
+	&__card-title {
+		margin: 0 0 1.25rem;
+		font-family: $font-primary;
+		font-size: $font-size-lg;
+		font-weight: $font-weight-bold;
+		line-height: 1.15;
+		color: $text-primary;
+		transition: font-size 0.2s ease;
+	}
+
+	&__text {
+		margin: 0;
+		font-size: $font-size-base;
+		line-height: 1.08;
+		color: $gray-600;
+		transition: font-size 0.2s ease, line-height 0.2s ease;
+	}
+
+	&__card:hover &__icon {
+		transform: scale(1.12);
+		transform-origin: top left;
+	}
+
+	&__card:hover &__card-title {
+		font-size: $font-size-xl;
+	}
+
+	&__card:hover &__text {
+		font-size: $font-size-lg;
+		line-height: 1.12;
+	}
+
+	// Deux colonnes sur tablette pour eviter des cartes trop serrees.
+	@media (max-width: 960px) {
+		&__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	// Une colonne sur mobile, en conservant les espacements principaux.
+	@media (max-width: 640px) {
+		padding: 4rem 1.25rem;
+
+		&__header {
+			margin-bottom: 3rem;
+		}
+
+		&__grid {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+
+		&__card {
+			min-height: auto;
 		}
 	}
 }
