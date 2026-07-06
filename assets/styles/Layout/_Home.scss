@@ -445,6 +445,7 @@
 	padding: 4.75rem 2rem 5rem;
 	background-color: $gray-100;
 
+	// Titre de section + phrase d'introduction.
 	&__header {
 		position: relative;
 		z-index: 0;
@@ -471,6 +472,7 @@
 		color: $gray-500;
 	}
 
+	// Grille des objets remontes depuis la BDD.
 	&__grid {
 		position: relative;
 		z-index: 1;
@@ -481,6 +483,7 @@
 		margin: 0 auto;
 	}
 
+	// Carte compacte visible dans la page. La vraie modale est un clone JS.
 	&__card {
 		position: relative;
 		display: flex;
@@ -494,6 +497,7 @@
 		transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 	}
 
+	// Image de l'objet ou fallback public/images/no-image.png si rien n'est renseigne.
 	&__image {
 		width: 100%;
 		aspect-ratio: 1.25;
@@ -501,6 +505,7 @@
 		background-color: $gray-200;
 	}
 
+	// Corps de carte : titre, description, metadata puis bouton.
 	&__body {
 		display: flex;
 		flex: 1;
@@ -508,6 +513,7 @@
 		padding: 0.95rem 0.9rem 0.8rem;
 	}
 
+	// Titre compact : le texte est deja limite cote Twig pour garder la grille propre.
 	&__card-title {
 		margin: 0 0 0.75rem;
 		font-family: $font-primary;
@@ -517,6 +523,7 @@
 		color: $text-primary;
 	}
 
+	// Description compactee sur la carte normale. La modale retire ce clamp.
 	&__description {
 		display: -webkit-box;
 		margin: 0 0 1.25rem;
@@ -528,6 +535,7 @@
 		-webkit-line-clamp: 3;
 	}
 
+	// Ligne basse avec valeur d'achat a gauche et proprietaire a droite.
 	&__meta {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -556,6 +564,7 @@
 		color: $text-primary;
 	}
 
+	// CTA visible sur chaque carte. Il pourra etre remplace par une vraie route plus tard.
 	&__button {
 		display: inline-flex;
 		min-height: 2.25rem;
@@ -585,12 +594,14 @@
 		color: $gray-600;
 	}
 
+	// Responsive tablette : deux colonnes pour garder de la largeur sur chaque carte.
 	@media (max-width: 960px) {
 		&__grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 	}
 
+	// Responsive mobile : une seule colonne.
 	@media (max-width: 640px) {
 		padding: 4rem 1.25rem;
 
@@ -600,7 +611,11 @@
 	}
 }
 
-// Modale creee en JS depuis une carte "Objet en vedette".
+// =============================================================================
+// Modale "Objet en vedette"
+// =============================================================================
+// Overlay cree par assets/Js/modalHome.js. Le JS clone la carte originale dans le
+// body pour eviter les bugs de positionnement avec la grille et le footer.
 .home-featured-modal {
 	position: fixed;
 	inset: 0;
@@ -611,6 +626,7 @@
 	background-color: rgba($black, 0.22);
 }
 
+// Carte agrandie dans la modale : image a gauche, contenu a droite sur desktop.
 .home-featured-modal__card {
 	display: grid;
 	grid-template-columns: minmax(16rem, 0.95fr) minmax(18rem, 1.05fr);
@@ -623,22 +639,26 @@
 	background-color: $white;
 	box-shadow: 0 24px 46px rgba($black, 0.24);
 
+	// L'image remplit la hauteur de la modale pour un rendu plus immersif.
 	.home-featured__image {
 		height: 100%;
 		min-height: 24rem;
 		aspect-ratio: auto;
 	}
 
+	// On donne plus d'air au contenu dans la version modale.
 	.home-featured__body {
 		padding: 2rem;
 	}
 
+	// Texte complet en modale : les valeurs viennent des data-* du Twig.
 	.home-featured__card-title {
 		margin-bottom: 1.25rem;
 		font-size: $font-size-3xl;
 		line-height: 1.12;
 	}
 
+	// Pas de rognage ici, contrairement aux cartes compactes.
 	.home-featured__description {
 		margin-bottom: 2rem;
 		font-size: $font-size-base;
@@ -656,10 +676,12 @@
 	}
 }
 
+// Evite que la page defile derriere la modale.
 body.has-home-featured-modal {
 	overflow: hidden;
 }
 
+// Modale mobile/tablette : empile image puis contenu.
 @media (max-width: 960px) {
 	.home-featured-modal__card {
 		grid-template-columns: 1fr;

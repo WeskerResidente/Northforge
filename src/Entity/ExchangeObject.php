@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ExchangeObjectRepository::class)]
+#[ORM\Index(name: 'IDX_EXCHANGE_OBJECT_FEATURED_CREATED_AT', columns: ['is_featured', 'created_at'])]
 class ExchangeObject
 {
     #[ORM\Id]
@@ -32,7 +33,7 @@ class ExchangeObject
     #[ORM\Column]
     private bool $isFeatured = false;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()

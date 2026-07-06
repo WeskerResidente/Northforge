@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription - Northforge{% endblock %}
+
+{% block body %}
+<main class="register-page">
+	<section class="register-card" aria-labelledby="register-title">
+		<div class="register-card__header">
+			<h1 class="register-card__title" id="register-title">Créer votre compte</h1>
+			<p class="register-card__subtitle">Rejoignez Northforge et proposez vos premiers échanges.</p>
+		</div>
+
+		{{ form_start(registrationForm, {'attr': {
+			'class': 'register-form',
+			'id': 'registration-form',
+			'data-check-email-url': path('app_register_check_email'),
+			'data-check-siret-url': path('app_register_check_siret')
+		}}) }}
+			<div class="register-form__grid">
+				<div class="register-form__field">
+					{{ form_label(registrationForm.lastName) }}
+					{{ form_widget(registrationForm.lastName) }}
+					{{ form_errors(registrationForm.lastName) }}
+				</div>
+
+				<div class="register-form__field">
+					{{ form_label(registrationForm.firstName) }}
+					{{ form_widget(registrationForm.firstName) }}
+					{{ form_errors(registrationForm.firstName) }}
+				</div>
+
+				<div class="register-form__field">
+					{{ form_label(registrationForm.companyName) }}
+					{{ form_widget(registrationForm.companyName) }}
+					{{ form_errors(registrationForm.companyName) }}
+				</div>
+
+				<div class="register-form__field">
+					{{ form_label(registrationForm.email) }}
+					{{ form_widget(registrationForm.email) }}
+					{{ form_errors(registrationForm.email) }}
+				</div>
+
+				<div class="register-form__field register-form__field--wide">
+					{{ form_label(registrationForm.address) }}
+					{{ form_widget(registrationForm.address) }}
+					{{ form_errors(registrationForm.address) }}
+				</div>
+
+				<div class="register-form__field">
+					{{ form_label(registrationForm.companyWebsite) }}
+					{{ form_widget(registrationForm.companyWebsite) }}
+					{{ form_errors(registrationForm.companyWebsite) }}
+				</div>
+
+				<div class="register-form__field">
+					{{ form_label(registrationForm.siret) }}
+					{{ form_widget(registrationForm.siret) }}
+					{{ form_errors(registrationForm.siret) }}
+				</div>
+
+				<div class="register-form__field register-form__field--wide">
+					{{ form_label(registrationForm.companyDescription) }}
+					{{ form_widget(registrationForm.companyDescription) }}
+					{{ form_errors(registrationForm.companyDescription) }}
+				</div>
+
+				<div class="register-form__field register-form__field--wide">
+					{{ form_label(registrationForm.tags) }}
+					<div class="register-form__choices">
+						{{ form_widget(registrationForm.tags) }}
+					</div>
+					{{ form_errors(registrationForm.tags) }}
+				</div>
+
+				<div class="register-form__field register-form__field--password">
+					{{ form_label(registrationForm.plainPassword.first) }}
+					{{ form_widget(registrationForm.plainPassword.first) }}
+					<p class="password-strength"></p>
+					<div class="strength-meter" hidden>
+						<span class="strength-meter__fill"></span>
+					</div>
+					{{ form_errors(registrationForm.plainPassword.first) }}
+				</div>
+
+				<div class="register-form__field register-form__field--password">
+					{{ form_label(registrationForm.plainPassword.second) }}
+					{{ form_widget(registrationForm.plainPassword.second) }}
+					{{ form_errors(registrationForm.plainPassword.second) }}
+				</div>
+			</div>
+
+			<button class="btn btn-inscription register-form__submit" id="register-btn" type="submit">Créer mon compte</button>
+		{{ form_end(registrationForm) }}
+	</section>
+</main>
+{% endblock %}

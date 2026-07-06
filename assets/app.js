@@ -10,5 +10,6 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 import './Js/animation.js';
 import './Js/modalHome.js';
+import './Js/register.js';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
