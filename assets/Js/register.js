@@ -11,6 +11,7 @@ const initRegisterForm = () => {
 	const confirmField = form.querySelector('[name="register[plainPassword][second]"]');
 	const tagFields = form.querySelectorAll('[name="register[tags][]"]');
 	const submitButton = form.querySelector('#register-btn');
+	const submitFeedback = form.querySelector('#register-submit-feedback');
 	const checkEmailUrl = form.dataset.checkEmailUrl || '/register/check-email';
 	const checkSiretUrl = form.dataset.checkSiretUrl || '/register/check-siret';
 
@@ -218,9 +219,24 @@ const initRegisterForm = () => {
 		return Array.from(tagFields).some((field) => field.checked);
 	};
 
-	const validateForm = () => {
+	const validateRequiredFields = () => {
+		const managedFields = [emailField, siretField, passwordField, confirmField];
 		const requiredFields = form.querySelectorAll('input[required], textarea[required]');
-		const requiredFieldsFilled = Array.from(requiredFields).every((field) => field.value.trim() !== '');
+
+		return Array.from(requiredFields).every((field) => {
+			if (managedFields.includes(field) || field.type === 'checkbox') {
+				return true;
+			}
+
+			const isFilled = field.value.trim() !== '';
+			setFieldFeedback(field, isFilled ? '' : 'Ce champ est obligatoire.');
+
+			return isFilled;
+		});
+	};
+
+	const validateForm = () => {
+		const requiredFieldsFilled = validateRequiredFields();
 		const isEmailValid = updateEmailFeedback();
 		const isSiretValid = updateSiretFeedback();
 		const isPasswordValid = validatePassword();
@@ -233,6 +249,10 @@ const initRegisterForm = () => {
 
 		submitButton.disabled = !isValid;
 		submitButton.classList.toggle('is-disabled', !isValid);
+
+		if (submitFeedback) {
+			submitFeedback.textContent = isValid ? '' : 'Complétez les champs obligatoires pour créer votre compte.';
+		}
 	};
 
 	const checkAvailability = async (fieldName, field, endpoint, parameterName, usedMessage) => {

@@ -164,6 +164,16 @@
 		}
 	}
 
+	&__submit-feedback {
+		min-height: 1.1rem;
+		margin: 0.75rem 0 0;
+		color: $denied;
+		font-size: $font-size-sm;
+		font-weight: $font-weight-medium;
+		line-height: 1.25;
+		text-align: center;
+	}
+
 	.form-error {
 		min-height: 1.1rem;
 		color: $denied;
@@ -225,56 +235,5 @@
 		&__grid {
 			grid-template-columns: 1fr;
 		}
-	}
-}
-
-.login-card {
-	max-width: 34rem;
-
-	&__alert,
-	&__notice,
-	&__register {
-		margin: 0 0 1.25rem;
-		font-size: $font-size-base;
-		font-weight: $font-weight-medium;
-		line-height: $line-height-normal;
-	}
-
-	&__alert {
-		padding: 0.9rem 1rem;
-		border: 1px solid rgba($denied, 0.22);
-		border-radius: 0.45rem;
-		background-color: rgba($denied, 0.06);
-		color: $denied;
-	}
-
-	&__notice,
-	&__register {
-		color: $gray-600;
-		text-align: center;
-
-		a {
-			color: $text-secondary;
-			font-weight: $font-weight-bold;
-			text-decoration: none;
-
-			&:hover {
-				text-decoration: underline;
-			}
-		}
-	}
-
-	&__register {
-		margin: 1.25rem 0 0;
-	}
-}
-
-.login-form {
-	display: grid;
-	gap: 1.25rem;
-
-	&__submit {
-		width: 100%;
-		margin-top: 0.5rem;
 	}
 }
