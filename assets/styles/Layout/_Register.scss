@@ -61,6 +61,11 @@
 			font-size: $font-size-sm;
 			font-weight: $font-weight-bold;
 			color: $text-primary;
+
+			&.required::after {
+				content: " *";
+				color: $denied;
+			}
 		}
 
 		input:not([type="checkbox"]),

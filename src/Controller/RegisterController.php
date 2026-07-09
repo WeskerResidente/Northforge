@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegisterType;
 use App\Repository\UserRepository;
+use App\Service\SireneSiretValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +22,19 @@ class RegisterController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordHasher,
+        SireneSiretValidator $siretValidator,
     ): Response {
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $siretValidation = $siretValidator->validate((string) $user->getSiret());
+
+            if (!$siretValidation['valid']) {
+                $form->get('siret')->addError(new FormError($siretValidation['message']));
+            }
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $plainPassword = $form->get('plainPassword')->getData();
@@ -59,14 +70,24 @@ class RegisterController extends AbstractController
     }
 
     #[Route(path: '/register/check-siret', name: 'app_register_check_siret', methods: ['GET'])]
-    public function checkSiret(Request $request, UserRepository $userRepository): JsonResponse
+    public function checkSiret(
+        Request $request,
+        UserRepository $userRepository,
+        SireneSiretValidator $siretValidator,
+    ): JsonResponse
     {
         $siret = trim((string) $request->query->get('siret', ''));
-        $isFormatValid = preg_match('/^\d{14}$/', $siret) === 1;
+        $validation = $siretValidator->validate($siret);
+        $available = $validation['valid'] && $userRepository->findOneBy(['siret' => $siret]) === null;
+
+        if ($validation['valid'] && !$available) {
+            $validation['message'] = 'Ce numéro de SIRET est déjà utilisé.';
+        }
 
         return $this->json([
-            'valid' => $isFormatValid,
-            'available' => $isFormatValid && $userRepository->findOneBy(['siret' => $siret]) === null,
+            'valid' => $validation['valid'],
+            'available' => $available,
+            'message' => $validation['message'],
         ]);
     }
 }

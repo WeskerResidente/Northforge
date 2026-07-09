@@ -284,7 +284,14 @@ const initRegisterForm = () => {
 			}
 
 			state.valid = Boolean(data.valid && data.available);
-			state.message = state.valid ? '' : usedMessage;
+
+			if (state.valid) {
+				state.message = '';
+			} else if (data.valid === false && fieldName === 'siret') {
+				state.message = data.message || "Ce numéro de SIRET n'est pas valide.";
+			} else {
+				state.message = data.message || usedMessage;
+			}
 		} catch (error) {
 			if (field.value.trim() === value) {
 				state.valid = null;
