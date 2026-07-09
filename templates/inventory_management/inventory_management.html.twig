@@ -1,0 +1,381 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion de stock - Northforge{% endblock %}
+
+{% block body %}
+<main class="inventory-shell">
+	<aside class="dashboard-navbar" aria-label="Navigation profil">
+		<div class="dashboard-navbar__company">
+			<strong>{{ user.companyName }}</strong>
+			<span>{{ user.email }}</span>
+		</div>
+
+		<nav class="dashboard-navbar__menu">
+			<a class="dashboard-navbar__link is-active" href="{{ path('app_inventory_management') }}">
+				<img src="{{ asset('icons/box.svg') }}" alt="" aria-hidden="true">
+				<span>Gestion de stock</span>
+			</a>
+			<a class="dashboard-navbar__link" href="#">
+				<img src="{{ asset('icons/shop.svg') }}" alt="" aria-hidden="true">
+				<span>MarketPlace</span>
+			</a>
+			<a class="dashboard-navbar__link" href="#">
+				<img src="{{ asset('icons/truck.png') }}" alt="" aria-hidden="true">
+				<span>Echanges</span>
+			</a>
+			<a class="dashboard-navbar__link" href="#">
+				<img src="{{ asset('icons/Message.png') }}" alt="" aria-hidden="true">
+				<span>Messagerie</span>
+			</a>
+			<a class="dashboard-navbar__link" href="#">
+				<img src="{{ asset('icons/Analyse.png') }}" alt="" aria-hidden="true">
+				<span>Analyses</span>
+			</a>
+			<a class="dashboard-navbar__link" href="#">
+				<img src="{{ asset('icons/Document.png') }}" alt="" aria-hidden="true">
+				<span>Documents</span>
+			</a>
+			<a class="dashboard-navbar__link" href="#">
+				<img src="{{ asset('icons/people.png') }}" alt="" aria-hidden="true">
+				<span>Annuaire</span>
+			</a>
+		</nav>
+
+		<a class="dashboard-navbar__account" href="#">
+			<img src="{{ asset('icons/people.png') }}" alt="" aria-hidden="true">
+			<span>Mon compte</span>
+		</a>
+	</aside>
+
+	<section class="inventory-page" aria-labelledby="inventory-title">
+		<header class="inventory-topbar">
+			<strong>Gestion de stock</strong>
+			<div class="inventory-topbar__actions">
+				<button class="inventory-action" type="button">
+					<img src="{{ asset('icons/Scan.png') }}" alt="" aria-hidden="true">
+					<span>Scanner</span>
+				</button>
+				<button class="inventory-action inventory-action--primary" type="button" data-inventory-product-add>
+					<img src="{{ asset('icons/Add.svg') }}" alt="" aria-hidden="true">
+					<span>Ajouter produit</span>
+				</button>
+			</div>
+		</header>
+
+		<div class="inventory-page__content">
+			<div class="inventory-heading">
+				<h1 id="inventory-title">Gestion de stock</h1>
+				<p>Gérez vos produits et suivez vos mouvements de stock</p>
+			</div>
+
+			<div class="inventory-stats" aria-label="Statistiques du stock">
+				<article class="inventory-stat">
+					<div>
+						<h2>Total Produits</h2>
+						<strong data-inventory-total-products>{{ products|length }}</strong>
+						<span><span data-inventory-total-units>{{ totalUnits }}</span> unités en stock</span>
+					</div>
+					<img src="{{ asset('icons/box.svg') }}" alt="" aria-hidden="true">
+				</article>
+
+				<article class="inventory-stat">
+					<div>
+						<h2>Valeur Stock</h2>
+						<strong data-inventory-total-value>{{ totalStockValue|number_format(2, ',', ' ') }} €</strong>
+						<span>Valeur totale estimée</span>
+					</div>
+					<img src="{{ asset('icons/Analyse.png') }}" alt="" aria-hidden="true">
+				</article>
+
+				<article class="inventory-stat">
+					<div>
+						<h2>Mouvements</h2>
+						<strong data-inventory-total-movements>{{ products|length }}</strong>
+						<span>Ce mois-ci</span>
+					</div>
+					<img src="{{ asset('icons/exchange.svg') }}" alt="" aria-hidden="true">
+				</article>
+			</div>
+
+			<div class="inventory-tabs" aria-label="Vues de gestion">
+				<button class="is-active" type="button" data-inventory-tab="products">Produits</button>
+				<button type="button" data-inventory-tab="movements">Mouvements</button>
+			</div>
+
+			<label class="inventory-search" data-inventory-panel="products">
+				<img src="{{ asset('icons/search.png') }}" alt="" aria-hidden="true">
+				<input type="search" placeholder="Recherchez par nom, référence, catégorie...">
+			</label>
+
+			<section class="inventory-products" aria-labelledby="inventory-products-title" data-inventory-panel="products">
+				<div class="inventory-products__header">
+					<h2 id="inventory-products-title">Liste des produits</h2>
+					<p><span data-inventory-list-count>{{ products|length }}</span> produit(s) trouvé(s)</p>
+				</div>
+
+				<div class="inventory-products__table-wrap">
+					<table class="inventory-products__table">
+						<thead>
+							<tr>
+								<th>Référence</th>
+								<th>Nom</th>
+								<th>Catégorie</th>
+								<th>Qualité</th>
+								<th>Quantité</th>
+								<th>Prix Unit.</th>
+								<th>Valeur</th>
+							</tr>
+						</thead>
+						<tbody data-inventory-products-body>
+							{% for product in products %}
+								<tr
+									class="inventory-products__row"
+									tabindex="0"
+									data-inventory-product-row
+									data-update-url="{{ path('app_inventory_product_update', {id: product.id}) }}"
+									data-name="{{ product.name }}"
+									data-reference="{{ product.reference }}"
+									data-description="{{ product.description }}"
+									data-categories="{{ product.categories|join(', ') }}"
+									data-condition="{{ product.condition }}"
+									data-unit-price="{{ product.unitPrice }}"
+									data-quantity="{{ product.quantity }}"
+									data-photo="{{ product.photo ?? '' }}"
+								>
+									<td data-product-reference>{{ product.reference }}</td>
+									<td>
+										<strong data-product-name>{{ product.name }}</strong>
+										<span data-product-description>{{ product.description }}</span>
+									</td>
+									<td data-product-categories>{{ product.categories|join('<br>')|raw }}</td>
+									<td>
+										<span data-product-condition class="inventory-quality inventory-quality--{{ product.condition|lower|replace({' ': '-'}) }}">
+											{{ product.condition }}
+										</span>
+									</td>
+									<td data-product-quantity>{{ product.quantity }}</td>
+									<td data-product-unit-price>{{ product.unitPrice|number_format(2, ',', ' ') }} €</td>
+									<td data-product-stock-value>{{ product.stockValue|number_format(2, ',', ' ') }} €</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="7" class="inventory-products__empty">Aucun produit dans votre catalogue pour le moment.</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</section>
+
+			<section class="inventory-products inventory-products--movements" aria-labelledby="inventory-movements-title" data-inventory-panel="movements" hidden>
+				<div class="inventory-products__header">
+					<h2 id="inventory-movements-title">Liste des Mouvements</h2>
+					<p>{{ movements|length }} produit(s) trouvé(s)</p>
+				</div>
+
+				<div class="inventory-movements">
+					<div class="inventory-movements__head">
+						<span>Référence</span>
+						<span>Date</span>
+						<span>Qualité</span>
+						<span>Transporteur</span>
+						<span>Catégorie</span>
+						<span>Quantité</span>
+						<span>Valeur</span>
+						<span>Actions</span>
+					</div>
+
+					{% for movement in movements %}
+						<article class="inventory-movement is-open" data-inventory-movement>
+							<div class="inventory-movement__summary">
+								<div class="inventory-movement__reference">
+									<button class="inventory-movement__toggle" type="button" aria-expanded="true" data-inventory-movement-toggle>
+										<span aria-hidden="true">v</span>
+									</button>
+									<strong>{{ movement.reference }}</strong>
+								</div>
+								<span>{{ movement.movementDate|date('d/m/Y') }}</span>
+								<span class="inventory-quality inventory-quality--{{ movement.quality|lower|replace({' ': '-'}) }}">{{ movement.quality }}</span>
+								<span>{{ movement.carrier }}</span>
+								<span>{{ movement.categories|join('<br>')|raw }}</span>
+								<span>{{ movement.quantity }}</span>
+								<span>{{ movement.movementValue|number_format(2, ',', ' ') }} €</span>
+								<button class="inventory-movement__pdf" type="button">
+									<img src="{{ asset('icons/Download.png') }}" alt="" aria-hidden="true">
+									<span>PDF</span>
+								</button>
+							</div>
+
+							<div class="inventory-movement__details" data-inventory-movement-details>
+								<div class="inventory-movement__exchange">
+									<div>
+										<h3>Produits échanger</h3>
+										<table>
+											<thead>
+												<tr>
+													<th>Référence</th>
+													<th>Nom</th>
+													<th>Quantité</th>
+													<th>Valeur</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for item in movement.offeredItems %}
+													<tr>
+														<td>{{ item.reference }}</td>
+														<td>{{ item.name }}</td>
+														<td>{{ item.quantity }}</td>
+														<td>{{ item.itemValue|number_format(2, ',', ' ') }} €</td>
+													</tr>
+												{% endfor %}
+											</tbody>
+										</table>
+										<strong>TOTAL : {{ movement.offeredTotal|number_format(0, ',', ' ') }} €</strong>
+									</div>
+
+									<div>
+										<table>
+											<thead>
+												<tr>
+													<th>Référence</th>
+													<th>Nom</th>
+													<th>Quantité</th>
+													<th>Valeur</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for item in movement.receivedItems %}
+													<tr>
+														<td>{{ item.reference }}</td>
+														<td>{{ item.name }}</td>
+														<td>{{ item.quantity }}</td>
+														<td>{{ item.itemValue|number_format(2, ',', ' ') }} €</td>
+													</tr>
+												{% endfor %}
+											</tbody>
+										</table>
+										<strong>TOTAL : {{ movement.receivedTotal|number_format(0, ',', ' ') }} €</strong>
+									</div>
+								</div>
+
+								<p class="inventory-movement__balance inventory-movement__balance--{{ movement.balanceDirection }}">
+									{% if movement.balanceDirection == 'pay' %}
+										VALEUR EXCEDENTE A PAYER : <strong>{{ movement.balanceAmount|number_format(0, ',', ' ') }}€</strong>
+									{% else %}
+										VALEUR EXCEDENTE A RECEVOIR : <strong>{{ movement.balanceAmount|number_format(0, ',', ' ') }}€</strong>
+									{% endif %}
+								</p>
+							</div>
+						</article>
+					{% else %}
+						<p class="inventory-products__empty">Aucun mouvement en cours pour le moment.</p>
+					{% endfor %}
+				</div>
+			</section>
+		</div>
+	</section>
+
+	<div class="inventory-modal" id="inventory-product-modal" aria-hidden="true">
+		<div class="inventory-modal__overlay" data-inventory-modal-close></div>
+		<section class="inventory-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="inventory-modal-title">
+			<button class="inventory-modal__close" type="button" aria-label="Fermer" data-inventory-modal-close>
+				<img src="{{ asset('icons/cross.png') }}" alt="" aria-hidden="true">
+			</button>
+
+			<header class="inventory-modal__header">
+				<h2 id="inventory-modal-title" data-inventory-modal-title>Modifier le produit</h2>
+				<p data-inventory-modal-subtitle>Modifiez les informations du produit ou supprimez-le</p>
+			</header>
+
+			<form class="inventory-modal__form" data-create-url="{{ createProductUrl }}">
+				<div class="inventory-modal__image-field">
+					<label>Image du produit</label>
+					<div class="inventory-modal__dropzone">
+						<img class="inventory-modal__placeholder-icon" src="{{ asset('icons/Picture.png') }}" alt="" aria-hidden="true">
+						<span>Aucune image</span>
+						<button type="button">
+							<img src="{{ asset('icons/Upload.png') }}" alt="" aria-hidden="true">
+							<span>Télécharger une image</span>
+						</button>
+					</div>
+				</div>
+
+				<div class="inventory-modal__grid">
+					<label>
+						<span>Nom du produit *</span>
+						<input type="text" name="name" data-inventory-modal-field="name">
+					</label>
+
+					<label>
+						<span>Référence *</span>
+						<input type="text" name="reference" data-inventory-modal-field="reference" readonly>
+					</label>
+
+					<label class="inventory-modal__wide">
+						<span>Description</span>
+						<input type="text" name="description" data-inventory-modal-field="description">
+					</label>
+
+					<label>
+						<span>Catégorie</span>
+						<select name="category" data-inventory-modal-field="categories">
+							<option value="Emballage">Emballage</option>
+							<option value="Protection">Protection</option>
+							<option value="Transport">Transport</option>
+							<option value="Logistique">Logistique</option>
+						</select>
+					</label>
+
+					<label>
+						<span>Qualité</span>
+						<select name="condition" data-inventory-modal-field="condition">
+							<option value="excellent">Excellent</option>
+							<option value="Bon">Bon</option>
+							<option value="Correct">Correct</option>
+						</select>
+					</label>
+
+					<label>
+						<span>Prix unitaire (€)</span>
+						<input type="number" name="unitPrice" min="0" step="0.01" data-inventory-modal-field="unitPrice">
+					</label>
+
+					<label>
+						<span>Quantité</span>
+						<input type="number" name="quantity" min="0" step="1" data-inventory-modal-field="quantity">
+					</label>
+				</div>
+
+				<div class="inventory-modal__actions">
+					<button class="inventory-modal__delete" type="button" data-inventory-modal-delete>
+						<img src="{{ asset('icons/Trash.png') }}" alt="" aria-hidden="true">
+						<span>Supprimer</span>
+					</button>
+					<div>
+						<button class="inventory-modal__secondary" type="button" data-inventory-modal-close>Annuler</button>
+						<button class="inventory-modal__save" type="submit" data-inventory-modal-submit>Enregistrer</button>
+					</div>
+				</div>
+				<p class="inventory-modal__feedback" data-inventory-modal-feedback></p>
+			</form>
+		</section>
+	</div>
+
+	<template id="inventory-product-row-template">
+		<tr class="inventory-products__row" tabindex="0" data-inventory-product-row>
+			<td data-product-reference></td>
+			<td>
+				<strong data-product-name></strong>
+				<span data-product-description></span>
+			</td>
+			<td data-product-categories></td>
+			<td>
+				<span data-product-condition class="inventory-quality"></span>
+			</td>
+			<td data-product-quantity></td>
+			<td data-product-unit-price></td>
+			<td data-product-stock-value></td>
+		</tr>
+	</template>
+</main>
+{% endblock %}

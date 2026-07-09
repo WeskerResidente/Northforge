@@ -1,0 +1,81 @@
+.dashboard-navbar {
+	position: sticky;
+	top: 0;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	width: 16rem;
+	min-height: 100vh;
+	border-right: 1px solid $gray-300;
+	background-color: $white;
+	color: $text-primary;
+
+	&__company {
+		display: grid;
+		gap: 0.35rem;
+		padding: 2rem 1.5rem 1.25rem;
+
+		strong {
+			font-size: $font-size-lg;
+			font-weight: $font-weight-bold;
+			line-height: $line-height-tight;
+		}
+
+		span {
+			color: $gray-600;
+			font-size: $font-size-xs;
+			font-weight: $font-weight-medium;
+		}
+	}
+
+	&__menu {
+		display: grid;
+		align-content: start;
+		gap: 0.3rem;
+		padding: 0.5rem 1rem;
+	}
+
+	&__link,
+	&__account {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		min-height: 2.8rem;
+		border-radius: 0.45rem;
+		padding: 0 0.75rem;
+		color: $text-primary;
+		font-size: $font-size-base;
+		font-weight: $font-weight-bold;
+		text-decoration: none;
+		transition: background-color 0.2s ease, color 0.2s ease;
+
+		img {
+			width: 1.15rem;
+			height: 1.15rem;
+			object-fit: contain;
+		}
+
+		&:hover,
+		&.is-active {
+			background-color: $gray-200;
+		}
+	}
+
+	&__account {
+		margin: 1rem;
+		border: 1px solid $gray-300;
+		background-color: $gray-200;
+		font-size: $font-size-sm;
+	}
+
+	@media (max-width: 860px) {
+		position: static;
+		width: 100%;
+		min-height: auto;
+		border-right: 0;
+		border-bottom: 1px solid $gray-300;
+
+		&__menu {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+}

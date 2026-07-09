@@ -11,5 +11,6 @@ import '@fortawesome/fontawesome-free/js/all.js';
 import './Js/animation.js';
 import './Js/modalHome.js';
 import './Js/register.js';
+import './Js/inventoryManagement.js';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

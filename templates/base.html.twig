@@ -14,6 +14,7 @@
         {% endblock %}
     </head>
     <body>
+        {% block header %}
         <header class="site-header">
             <div class="site-header__brand">
                 <a class="site-header__logo-link" href="{{ path('app_home') }}" aria-label="Northforge accueil">
@@ -38,7 +39,7 @@
                         <span>Ajouter</span>
                     </a>
 
-                    <a class="site-header__nav-link" href="{{ path('app_login') }}">
+                    <a class="site-header__nav-link" href="{{ path('app_inventory_management') }}">
                         <img src="{{ asset('icons/profil.svg') }}" alt="" aria-hidden="true">
                         <span>Profil</span>
                     </a>
@@ -49,8 +50,10 @@
                 {% endif %}
             </nav>
         </header>
+        {% endblock %}
         {% block body %}{% endblock %}
 
+        {% block footer %}
         <footer class="site-footer">
             <div class="site-footer__inner">
                 <div class="site-footer__brand">
@@ -71,5 +74,6 @@
                 </p>
             </div>
         </footer>
+        {% endblock %}
     </body>
 </html>
